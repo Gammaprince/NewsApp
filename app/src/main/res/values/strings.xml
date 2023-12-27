@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">GreenChilli</string>
+    <string name="enjoy_restaurant_quality_food_n_at_home">Enjoy restaurant quality food \n at home</string>
+    <string name="location_description">Choose Your Location Etawah To provide you with the best dining experience , we need your permission to access your device\'s location. \nBy enabling location services, we can offer personalized restaurant recommendations, accurate delivery estimates, and ensure a seamless food delivery experience</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home">Home</string>
+    <string name="cart">Cart</string>
+</resources>
