@@ -16,6 +16,7 @@ class AddToCartRepository {
     private val firebase : FirebaseHelper = FirebaseHelper
     // Getting Unique Id of current customer from firebase Auth
     private val uid : String = FirebaseAuth.getInstance().currentUser?.uid.toString()
+
     // creating livedata for isAddedCart
     private val _isAddedToCart = MutableLiveData<Resource<String>>()
     val isAddedToCart : MutableLiveData<Resource<String>>
@@ -40,18 +41,15 @@ class AddToCartRepository {
                     val model = children.getValue(CartFragmentResponse::class.java);
                     listCart.add(model!!)
                 }
-
                 _cartList.postValue(Resource.Success(listCart))
             }
             override fun onCancelled(error: DatabaseError){
                 _cartList.postValue(Resource.Error(""))
             }
-
         })
 
     }
     suspend fun addToCart( image : String ,  foodName : String ,  price : String){
-
         _isAddedToCart.postValue(Resource.Loading())
         var model = CartFragmentResponse(image,foodName,price,1)
         val ref = firebase.getFirebaseRef("User/${uid}/cart/${foodName}")
@@ -96,5 +94,8 @@ class AddToCartRepository {
     }
     suspend fun deleteCart(foodName:String){
         firebase.getFirebaseRef("User/${uid}/cart/${foodName}").removeValue()
+    }
+    suspend fun getName(): String {
+        return FirebaseAuth.getInstance().currentUser.displayName.toString()
     }
 }
