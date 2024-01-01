@@ -95,7 +95,7 @@ class AddToCartRepository {
     suspend fun deleteCart(foodName:String){
         firebase.getFirebaseRef("User/${uid}/cart/${foodName}").removeValue()
     }
-    suspend fun getName(): String {
-        return FirebaseAuth.getInstance().currentUser.displayName.toString()
-    }
+//    suspend fun getName(): String {
+//        return FirebaseAuth.getInstance().currentUser.displayName.toString()
+//    }
 }

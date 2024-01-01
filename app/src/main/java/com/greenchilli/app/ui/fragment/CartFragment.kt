@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavOptions
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -44,15 +45,27 @@ class CartFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.button.setOnClickListener {
             val navController = Navigation.findNavController(view)
-            navController.navigate(R.id.action_cartFragment_to_orderPlacement)
+            navController.navigate(R.id.action_cartFragment_to_orderPlacement,null,
+                NavOptions.Builder()
+                    .setPopUpTo(R.id.cartFragment, true) // Pop up to previousFragment
+                    .build())
         }
         viewModel.cartList.observe(this, Observer {
             when(it){
                 is Resource.Success -> {
                     val adapter = it.data?.let { it1 -> CartFragmentAdapter(requireContext(), it1 , viewModel) }
-                    binding.cartRecyclerView.adapter = adapter
-                    binding.cartRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-                    adapter?.notifyDataSetChanged()
+                    if(it?.data?.size == 0){
+                        binding.emptyCart.visibility = View.VISIBLE
+                        binding.cartRecyclerView.visibility = View.GONE
+                    }
+                    else{
+                        binding.emptyCart.visibility = View.GONE
+                        binding.cartRecyclerView.visibility = View.VISIBLE
+                        binding.cartRecyclerView.adapter = adapter
+                        binding.cartRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+                        adapter?.notifyDataSetChanged()
+                    }
+
                 }
                 is Resource.Loading -> {
 
@@ -62,13 +75,6 @@ class CartFragment : Fragment() {
                 }
             }
         })
-
-
-
-
-
-
-
     }
 //    private fun showNewFragment() {
 //        val myFragment = orderPlacement()

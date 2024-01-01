@@ -4,38 +4,43 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.greenchilli.app.R
-import com.greenchilli.app.databinding.FamousFoodLayoutBinding
+import com.greenchilli.app.databinding.NotPurchasedLayoutBinding
 import com.greenchilli.app.databinding.PreviouslyBuyBinding
-import com.greenchilli.app.model.FamousFoodResponse
-import com.greenchilli.app.model.PreviousBuyResponse
+import com.greenchilli.app.model.CartFragmentResponse
 
 class PreviouslyBuyAdapter(
     private val context: Context,
-    private val response: List<PreviousBuyResponse>
+    private val response: List<CartFragmentResponse>?
 ) :
     RecyclerView.Adapter<PreviouslyBuyAdapter.ViewHolder>() {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = inflater.inflate(R.layout.previously_buy, parent, false)
-        return ViewHolder(
-            PreviouslyBuyBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
+            return ViewHolder(
+                PreviouslyBuyBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
             )
-        )
+
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val data = response[position]
-        holder.bind(data.foodName, data.image, data.price)
+        val count = response!!.size - 1 - position
+        val data = response?.get(count)
+        if(count>0){
+            holder.bind(data?.foodName ?: "", data?.foodImage ?: "", data?.price ?: "")
+        }
     }
 
     override fun getItemCount(): Int {
-        return response.size
+        val count = response?.size ?: 0
+        if(count == 0) return 0;
+        else return count-1
     }
 
     inner class ViewHolder(val binding: PreviouslyBuyBinding) :
@@ -47,16 +52,19 @@ class PreviouslyBuyAdapter(
 
         fun bind(
             foodName: String,
-            foodImage: Int,
+            foodImage: String,
             foodPrice: String,
             addToCart: String = "Buy Again"
         ) {
             binding.let {
                 it.foodName.text = foodName
-                it.foodImage.setImageResource(foodImage)
+                Glide.with(context).load(foodImage).into(binding.foodImage)
                 it.foodPrice.text = foodPrice
                 it.buyAgain.text = addToCart
             }
         }
+    }
+    inner class ViewHolder2(val binding : NotPurchasedLayoutBinding) : RecyclerView.ViewHolder(binding.root){
+
     }
 }

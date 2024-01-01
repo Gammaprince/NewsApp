@@ -20,11 +20,13 @@ class StartActivity : AppCompatActivity() {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
         if(Firebase.auth.currentUser != null){
             startActivity(Intent(applicationContext,MainActivity::class.java))
+            finish()
         }
         else Toast.makeText(this,"this user is null",Toast.LENGTH_SHORT).show()
         binding.next.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent);
+            finish()
         }
     }
 }

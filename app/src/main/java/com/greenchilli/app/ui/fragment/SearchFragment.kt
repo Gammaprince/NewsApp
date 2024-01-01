@@ -6,20 +6,29 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.greenchilli.app.R
+import com.greenchilli.app.data.AddToCartRepository
+import com.greenchilli.app.data.SearchRepository
 import com.greenchilli.app.databinding.FragmentSearchBinding
-import com.greenchilli.app.model.SearchViewResponse
-import kotlinx.coroutines.NonDisposableHandle.parent
-
-
+import com.greenchilli.app.domain.Resource
+import com.greenchilli.app.model.FamousFoodResponse
+import com.greenchilli.app.ui.viewmodel.SearchViewModel
+import com.greenchilli.app.ui.viewmodel.factory.SearchViewModelFactory
 class SearchFragment : Fragment(){
     private lateinit var binding: FragmentSearchBinding
+    private lateinit var viewModel : SearchViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        val searchRepository = SearchRepository()
+        val addToCartRepository = AddToCartRepository()
+        viewModel = ViewModelProvider(requireActivity(), SearchViewModelFactory(searchRepository,addToCartRepository)).get(
+            SearchViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -32,64 +41,56 @@ class SearchFragment : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val item = listOf<SearchViewResponse>(
-            SearchViewResponse(R.drawable.menu2, "HotDog", "$17"),
-            SearchViewResponse(R.drawable.menu2, "pizza", "$17"),
-            SearchViewResponse(R.drawable.menu2, "Burger", "$17"),
-            SearchViewResponse(R.drawable.menu2, "Momos", "$17"),
-            SearchViewResponse(R.drawable.menu2, "Chai", "$17"),
-            SearchViewResponse(R.drawable.menu2, "Dosa", "$17"),
-            SearchViewResponse(R.drawable.menu2, "Chilli", "$17"),
-            SearchViewResponse(R.drawable.menu2, "Coffee", "$17"),
-            SearchViewResponse(R.drawable.menu2, "Pakoda", "$17"),
-            SearchViewResponse(R.drawable.menu2, "Mirchie", "$17"),
-            SearchViewResponse(R.drawable.menu2, "Green", "$17"),
-            SearchViewResponse(R.drawable.menu4, "Vegiie", "$17"),
-            SearchViewResponse(R.drawable.menu2, "SweetCorn", "$17"),
-            SearchViewResponse(R.drawable.menu2, "Soup", "$17"),
-            SearchViewResponse(R.drawable.menu2, "Paneer", "$17"),
-            SearchViewResponse(R.drawable.menu2, "Chilli Paneer", "$17"),
-            SearchViewResponse(R.drawable.menu2, "Grilled Paneer", "$17"),
-            SearchViewResponse(R.drawable.menu2, "Cold Cofee", "$17"),
-            SearchViewResponse(R.drawable.menu2, "Golgappe", "$17"),
-            SearchViewResponse(R.drawable.menu2, "Chole", "$17"),
-            SearchViewResponse(R.drawable.menu2, "Bhatoore", "$17"),
-            SearchViewResponse(R.drawable.menu2, "Aloo Tikki", "$17"),
-            SearchViewResponse(R.drawable.menu2, "Pawbhaji", "$17"),
-            SearchViewResponse(R.drawable.menu2, "Kulhad Pizza", "$17"),
-        )
-        var adapter = SearchViewAdapter(requireContext(),item)
-        binding.searchRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        binding.searchRecyclerView.adapter = adapter
-        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
-            override fun onQueryTextSubmit(query: String?) : Boolean {
-                if (query.isNullOrEmpty()) {
-                    val adapter = SearchViewAdapter(requireContext(), item)
+//        viewModel.setItem()
+        viewModel.listOfItems.observe(this, Observer {
+            when(it){
+                is Resource.Success -> {
+                    var adapter = it.data?.let { it1 -> SearchViewAdapter(requireContext(), it1 , viewModel) }
+                    binding.searchRecyclerView.layoutManager = LinearLayoutManager(requireContext())
                     binding.searchRecyclerView.adapter = adapter
-                    adapter.notifyDataSetChanged()
-                } else {
-                    val list = ArrayList<SearchViewResponse>()
-                    for (i in item) {
-                        if (i.foodName.toLowerCase().contains(query.toLowerCase())) {
-                            list.add(i)
+                    adapter?.notifyDataSetChanged()
+                    binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+                        override fun onQueryTextSubmit(query: String?) : Boolean {
+                            if (query.isNullOrEmpty()) {
+                                val adapter =
+                                    it.data?.let { it1 -> SearchViewAdapter(requireContext(), it1 , viewModel) }
+                                binding.searchRecyclerView.adapter = adapter
+                                adapter?.notifyDataSetChanged()
+                            } else {
+                                val list = ArrayList<FamousFoodResponse>()
+                                for (i in it.data!!) {
+                                    if (i.foodName.toLowerCase().contains(query.toLowerCase())) {
+                                        list.add(i)
+                                    }
+                                }
+                                val adapter = SearchViewAdapter(requireContext(), list , viewModel)
+                                binding.searchRecyclerView.adapter = adapter
+                                adapter?.notifyDataSetChanged()
+                            }
+                            return true
                         }
-                    }
-                    val adapter = SearchViewAdapter(requireContext(), list)
-                    binding.searchRecyclerView.adapter = adapter
-                    adapter.notifyDataSetChanged()
+                        override fun onQueryTextChange(query: String?) : Boolean {
+                            if (query.isNullOrEmpty()) {
+                                val adapter =
+                                    it.data?.let { it1 -> SearchViewAdapter(requireContext(), it1 , viewModel) }
+                                binding.searchRecyclerView.adapter = adapter
+                                adapter?.notifyDataSetChanged()
+                            }
+                            return true
+                        }
+                    })
                 }
-                return true
-            }
 
-            override fun onQueryTextChange(query: String?) : Boolean {
-                if (query.isNullOrEmpty()) {
-                    val adapter = SearchViewAdapter(requireContext(), item)
-                    binding.searchRecyclerView.adapter = adapter
-                    adapter.notifyDataSetChanged()
+                is Resource.Loading -> {
                 }
-                return true
+
+                is Resource.Error -> {
+                    Toast.makeText(requireActivity(),"Something went wrong | Please Check your Internet Connection",Toast.LENGTH_SHORT).show()
+                }
             }
         })
+
+
     }
 
 }

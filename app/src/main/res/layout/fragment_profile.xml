@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:fillViewport="true"
-    android:layout_height="match_parent"
-    tools:context=".ui.fragment.ProfileFragment">
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:fillViewport="true"
+        android:layout_height="match_parent"
+        tools:context=".ui.fragment.ProfileFragment">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -42,11 +48,11 @@
                     android:padding="15dp">
 
                     <EditText
-                        android:id="@+id/nameEditText"
+                        android:id="@+id/name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
-                        android:text="Prince" />
+                        android:text="" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -78,10 +84,11 @@
                     android:padding="15dp">
 
                     <EditText
+                        android:id="@+id/address"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
-                        android:text="Etawah" />
+                        android:text="" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -112,10 +119,11 @@
                     android:padding="15dp">
 
                     <EditText
+                        android:id="@+id/email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
-                        android:text="Princelalu8923@gmail.com" />
+                        android:text="" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -148,10 +156,11 @@
                     android:padding="15dp">
 
                     <EditText
+                        android:id="@id/phone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
-                        android:text="+917906060836" />
+                        android:text="" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -164,22 +173,25 @@
                 android:orientation="horizontal"
                 android:gravity="bottom|center"
                 android:layout_marginBottom="10dp">
+
                 <androidx.appcompat.widget.AppCompatButton
                     android:layout_width="wrap_content"
                     android:layout_marginRight="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/signoutshape"
                     android:text="Sign out"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
+
                 <androidx.appcompat.widget.AppCompatButton
                     android:layout_width="wrap_content"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:background="@drawable/greenbuttongradient"
                     android:text="Save"
-                    android:textColor="@color/white"/>
+                    android:textColor="@color/white" />
             </LinearLayout>
 
         </LinearLayout>
 
-</ScrollView>
+    </ScrollView>
+</layout>
