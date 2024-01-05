@@ -17,4 +17,9 @@ class ProfileFragmentViewModel(private val repository: OrderPlacementRepository)
             repository.getInfo()
         }
     }
+    fun setInfo(name : String , address : String , phone : String , email : String){
+        viewModelScope.launch(Dispatchers.IO){
+            repository.setInfo(name,address,phone, email)
+        }
+    }
 }

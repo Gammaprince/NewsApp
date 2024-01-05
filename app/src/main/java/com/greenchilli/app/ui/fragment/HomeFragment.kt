@@ -52,7 +52,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 //        homeViewModel.setFamousFoodItem()
-//        homeViewModel.setOffers("https://firebasestorage.googleapis.com/v0/b/anor-e2bd5.appspot.com/o/banner1.jpg?alt=media&token=76c8008a-60e9-4de4-936a-fc61f399e174")
+//        homeViewModel.setOffers("https://firebasestorage.googleapis.com/v0/b/anor-e2bd5.appspot.com/o/banner3.jpg?alt=media&token=7cdd30f1-9ed9-466b-a2ab-cf3d030d1c1f")
         homeViewModel.famousFoodList.observe(this, Observer {
             when(it){
                 is Resource.Loading -> {

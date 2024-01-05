@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.greenchilli.app.R
 import com.greenchilli.app.data.MenuBottomSheetRepository
+import com.greenchilli.app.data.SearchRepository
 import com.greenchilli.app.databinding.MenuBottomSheetBinding
 import com.greenchilli.app.domain.Resource
 import com.greenchilli.app.model.MenuItemResponse
@@ -42,7 +43,8 @@ class MenuBottomSheet : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val repository = MenuBottomSheetRepository()
-        viewModel = ViewModelProvider(requireActivity(),MenutBottomSheetViewModelFactory(repository)).get(MenuBottomSheetViewModel::class.java)
+        val searchRepository = SearchRepository()
+        viewModel = ViewModelProvider(requireActivity(),MenutBottomSheetViewModelFactory(repository,searchRepository)).get(MenuBottomSheetViewModel::class.java)
         viewModel.menuList.observe(this, Observer {
             when(it){
                 is Resource.Success -> {

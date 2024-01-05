@@ -43,7 +43,7 @@ class OrderPlacementRepository(private val context: Context) {
 
     suspend fun getInfo() {
         _getInfo.postValue(Resource.Loading())
-        ref.addListenerForSingleValueEvent(object : ValueEventListener {
+        ref.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val data = snapshot.getValue(UserInfoResponse::class.java)!!
                 _getInfo.postValue(Resource.Success(data))
@@ -55,13 +55,13 @@ class OrderPlacementRepository(private val context: Context) {
         })
     }
 
-    suspend fun setInfo() {
-        ref.setValue(UserInfoResponse("Prince", "Etawah", "917906060836", "PrinceLalu"));
+    suspend fun setInfo(name : String , address : String , phone : String , email : String) {
+        ref.setValue(UserInfoResponse(name,address,phone,email));
     }
 
     suspend fun totalPrice() {
         _getTotalPrice.postValue(Resource.Loading())
-        FirebaseDatabase.getInstance("https://anor-e2bd5-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("User/${uid}/cart").addValueEventListener(object : ValueEventListener {
+        FirebaseHelper.getFirebaseRef("User/${uid}/cart").addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     totalPrice = 0
                     listOfCartFragmentResponse.clear()

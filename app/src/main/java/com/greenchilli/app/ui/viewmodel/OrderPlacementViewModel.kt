@@ -33,9 +33,4 @@ class OrderPlacementViewModel(private val repository : OrderPlacementRepository)
         }
         return job.await()
     }
-    fun setInfo(){
-        viewModelScope.launch(Dispatchers.IO){
-            repository.setInfo()
-        }
-    }
 }

@@ -111,7 +111,8 @@ class orderPlacement : Fragment() {
         viewModel.getTotalPrice.observe(this, Observer {
             when (it) {
                 is Resource.Success -> {
-                    binding.price.setText(it.data.toString())
+                    val price = "₹"+it.data.toString()
+                    binding.price.setText(price)
                     Log.d("Paya", "Success");
                 }
                 is Resource.Error -> {

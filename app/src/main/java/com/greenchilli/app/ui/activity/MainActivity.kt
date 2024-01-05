@@ -38,11 +38,6 @@ class MainActivity : AppCompatActivity() {
             val notification = NotificationFragment()
             notification.show(supportFragmentManager,"S")
         }
-        val secretKey = EncryptionUtil.generateSecretKey()
-        val encryptedData = EncryptionUtil.encryptData("Hello my name is Prince",secretKey)
-        Toast.makeText(applicationContext,encryptedData.encryptedText+" ok", Toast.LENGTH_LONG).show()
-        Log.d("Encryption",encryptedData.encryptedText)
-        val decryptedData = EncryptionUtil.decryptData(encryptedData,secretKey)
-        Log.d("Encryption",decryptedData.toString())
+//        vftftcc
     }
 }

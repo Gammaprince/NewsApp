@@ -30,7 +30,7 @@ class PreviouslyBuyAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val count = response!!.size - 1 - position
+        val count = response!!.size - 2 - position
         val data = response?.get(count)
         if(count>0){
             holder.bind(data?.foodName ?: "", data?.foodImage ?: "", data?.price ?: "")

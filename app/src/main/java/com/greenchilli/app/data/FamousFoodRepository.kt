@@ -40,8 +40,8 @@ class FamousFoodRepository {
 
     // saving java object to firebase
     suspend fun setFamousFoodItem() {
-        val image = "https://firebasestorage.googleapis.com/v0/b/anor-e2bd5.appspot.com/o/menu2.jpg?alt=media&token=63dc58ff-0ae2-4885-990f-b86c75f6c43f"
-        val model = FamousFoodResponse(image,"Well Pasta","₹201","This food contains mixed of many vegetables and it is good for health as well","Gobee , Adarak , Bhindi , Masala , Pesticide(231)")
+        val image = "https://firebasestorage.googleapis.com/v0/b/anor-e2bd5.appspot.com/o/menu7.jpg?alt=media&token=9b996020-e0af-4a78-bd7e-92459daca77e"
+        val model = FamousFoodResponse(image,"Mixed Fruits","₹5","This is very tasty , which fills with many rich Vitamins and minerals","Grapes,Banana,Apple")
         myRef.push().setValue(model)
     }
 }

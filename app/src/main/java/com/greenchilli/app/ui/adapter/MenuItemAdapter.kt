@@ -8,9 +8,11 @@ import com.bumptech.glide.Glide
 import com.greenchilli.app.R
 import com.greenchilli.app.databinding.FamousFoodLayoutBinding
 import com.greenchilli.app.databinding.MenuItemBinding
+import com.greenchilli.app.model.FamousFoodResponse
 import com.greenchilli.app.model.MenuItemResponse
+import com.greenchilli.app.model.SearchViewResponse
 
-class MenuItemAdapter(private val context: Context, private val response: List<MenuItemResponse>) :
+class MenuItemAdapter(private val context: Context, private val response: List<FamousFoodResponse>) :
     RecyclerView.Adapter<MenuItemAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -27,7 +29,7 @@ class MenuItemAdapter(private val context: Context, private val response: List<M
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val data = response[position]
-        holder.bind(data.foodImage,data.foodName,data.foodPrice)
+        holder.bind(data.image,data.foodName,data.price)
     }
 
     inner class ViewHolder(private val binding : FamousFoodLayoutBinding) : RecyclerView.ViewHolder(binding.root) {

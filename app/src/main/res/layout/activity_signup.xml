@@ -135,49 +135,29 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/googleSignIn"
-            android:layout_width="152dp"
-            android:layout_height="52dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:background="@drawable/edittextshape"
             android:drawableLeft="@drawable/google"
             android:drawablePadding="25dp"
-            android:gravity="left|center"
-            android:paddingLeft="10dp"
-            android:text="Google"
-            android:textAllCaps="false"
-            app:layout_constraintEnd_toStartOf="@+id/facebookSignIn"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView10" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/facebookSignIn"
-            android:layout_width="152dp"
-            android:layout_height="52dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/edittextshape"
-            android:drawableLeft="@drawable/facebook"
-            android:drawablePadding="20dp"
-            android:gravity="left|center"
-            android:paddingLeft="10dp"
-            android:text="Facebook"
+            android:paddingLeft="30dp"
             android:textAllCaps="false"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/googleSignIn"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
         <Button
             android:id="@+id/login"
-            android:layout_width="157dp"
+            android:layout_width="0dp"
             android:layout_height="52dp"
             android:layout_marginTop="15dp"
             android:background="@drawable/greenbuttongradient"
-            android:text="Create Account"
             android:fontFamily="@font/yeonsung"
+            android:text="Create Account"
             android:textColor="@color/white"
-            app:layout_constraintEnd_toEndOf="@+id/facebookSignIn"
-            app:layout_constraintStart_toStartOf="@+id/googleSignIn"
+            app:layout_constraintEnd_toEndOf="@+id/passwordSignIn"
+            app:layout_constraintStart_toStartOf="@+id/passwordSignIn"
             app:layout_constraintTop_toBottomOf="@+id/googleSignIn" />
 
         <TextView
